@@ -8,4 +8,5 @@ CREATE TABLE books (
 INSERT INTO books (title, author, filename)
 VALUES
     ('Frankenstein', 'Mary Shelley', '1.html'),
-    ('Pride and Prejudice', 'Jane Austen', '2.html');
+    ('Moby Dick', 'Herman Melville', '2.html'),
+    ('Crime and Punishment', 'Fyodor Dostoyevsky', '3.html');
