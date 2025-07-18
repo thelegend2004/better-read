@@ -10,37 +10,14 @@ function Reader() {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`https://gutendex.com/books/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const formats = data.formats;
-
-        const textUrl =
-          formats["text/plain; charset=utf-8"] ||
-          formats["text/plain"] ||
-          formats["text/html"] ||
-          formats["text/html; charset=utf-8"];
-
-        if (textUrl) {
-          const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
-            textUrl
-          )}`;
-          fetch(proxyUrl)
-            .then((res) => res.text())
-            .then((html) => {
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(html, "text/html");
-
-              const rawParapgraphs = Array.from(doc.querySelectorAll("p"))
-                .map((el) => el.outerHTML)
-                .filter((html) => html.length > 50);
-
-              setContent(rawParapgraphs);
-            })
-            .catch(() => setError("Failed to load book content."));
-        } else {
-          setError("Book format not supported");
-        }
+    fetch(`http://localhost:3001/books/${id}`)
+      .then((res) => res.text())
+      .then((text) => {
+        const paragraphs = text
+          .split(/\n{2,}/)
+          .map((p) => `<p>${p.trim()}</p>`)
+          .filter((p) => p.length > 50);
+        setContent(paragraphs);
       })
       .catch(() => setError("Could not fetch book information."));
   }, [id]);
