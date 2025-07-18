@@ -1,14 +1,15 @@
-import { Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Reader from "./pages/Reader";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="" element={<Home />}></Route>
         <Route path="/reader/:id" element={<Reader />} />
-        <Route></Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
